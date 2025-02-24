@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import io from "socket.io-client";
+
 const host = "http://localhost:5000";
 
 const socket = io.connect(host);
@@ -8,7 +9,9 @@ const socket = io.connect(host);
 const App = () => {
   const hitApi = async () => {
     const response = await axios.post(`${host}/api/socket-test`, {
-      name: "Test",
+      from: "user1",
+      message: "k cha?",
+      to: "chrome",
     });
 
     console.log(response.data);
@@ -19,7 +22,7 @@ const App = () => {
   }, []);
 
   React.useEffect(() => {
-    socket.on("testEvent", (testEvent) => {
+    socket.on(`test-url`, (testEvent) => {
       doLogics(testEvent.message);
     });
   }, [doLogics]);
